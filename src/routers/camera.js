@@ -3,8 +3,8 @@ const controller = require('../controllers/camera')
 
 const cameraRouter = express.Router()
 
-cameraRouter.get('/', (req,res) => {
-  controller.getAll('test', (err,resp) => {
+cameraRouter.get('/:tableName', (req,res) => {
+  controller.getAll(req.params.tableName, (err,resp) => {
     if(err){
       let respObj = {
         status: "error",

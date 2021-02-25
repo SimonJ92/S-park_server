@@ -7,10 +7,7 @@
 </head>
 
 <body>
-  <H1>Hello</H1>
-  <ul id="list">
-    <li>Premier élément</li>
-  </ul>
+  <H1>Hello World</H1>
   
   <!-- CREATION SOCKET -->
   <script src="/socket.io/socket.io.js"></script>
@@ -20,6 +17,7 @@
     // écoute du socket news
     socket.on('news', function(msg){
       console.log(msg)
+      document.write(msg)
     });
   </script>
   
