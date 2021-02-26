@@ -1,7 +1,29 @@
 const mysql = require('mysql');
+const Importer = require('mysql-import')
 const configure = require('./configure')
 
 const config = configure()
+
+
+const importer = new Importer({
+  host: config.mysql.host,
+  user: config.mysql.user,
+  password: config.mysql.password
+})
+
+importer.onProgress(progress=>{
+  var percent = Math.floor(progress.bytes_processed / progress.total_bytes * 10000) / 100;
+  console.log(`${percent}% Completed`);
+});
+
+importer.import(__dirname + '/../s-park_get_or_create.sql').then(()=>{
+  var files_imported = importer.getImported();
+  console.log(`${files_imported.length} SQL file(s) imported.`);
+}).catch(err=>{
+  console.error(err);
+});
+
+
 
 pool = mysql.createPool({
   host: config.mysql.host,

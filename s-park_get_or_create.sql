@@ -30,7 +30,6 @@ USE `s-park`;
 -- Table structure for table `parkingspot`
 --
 
-DROP TABLE IF EXISTS `parkingspot`;
 CREATE TABLE IF NOT EXISTS `parkingspot` (
   `CameraId` int(11) NOT NULL,
   `SpotNumber` int(11) NOT NULL,
@@ -44,11 +43,10 @@ CREATE TABLE IF NOT EXISTS `parkingspot` (
 -- Table structure for table `camera`
 --
 
-DROP TABLE IF EXISTS `camera`;
 CREATE TABLE IF NOT EXISTS `camera` (
   `CameraId` int(11) NOT NULL AUTO_INCREMENT,
   `Address` text,
-  PRIMARY KEY (`CameraId`)
+  PRIMARY KEY (`CameraId`) 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -58,8 +56,24 @@ CREATE TABLE IF NOT EXISTS `camera` (
 --
 -- Constraints for table `parkingspot`
 --
-ALTER TABLE `parkingspot`
-  ADD CONSTRAINT `CameraReference` FOREIGN KEY (`CameraId`) REFERENCES `camera` (`CameraId`) ON DELETE CASCADE ON UPDATE CASCADE;
+DROP procedure  IF EXISTS `add_constraint`;
+DELIMITER $$
+CREATE PROCEDURE `add_constraint`()
+Begin
+
+IF NOT EXISTS (SELECT NULL FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
+  WHERE CONSTRAINT_SCHEMA = DATABASE()
+    AND CONSTRAINT_TYPE = 'FOREIGN KEY'
+    AND CONSTRAINT_NAME =   'CameraReference') THEN
+  ALTER TABLE `parkingspot`
+    ADD CONSTRAINT `CameraReference` FOREIGN KEY (`CameraId`) REFERENCES `camera` (`CameraId`) ON DELETE CASCADE ON UPDATE CASCADE;
+END IF ;
+END$$
+
+DELIMITER ;
+
+CALL add_constraint();
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
