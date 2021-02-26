@@ -13,7 +13,7 @@ Continuous integration is assured by Travis [here](https://travis-ci.com/github/
 
 This is a NodeJS application, it was developped using node 14.11.0 and continuous integration is done with node 12 and 14, compatibility with previous versions is unknown. 
 
-The application needs to be ran along with a MySQL server. The application works with MySQL 8.0.21 and 5.6.51 and, compatibility with other versions is unknown.
+The application needs to be ran along with a MySQL server. The application should work with MySQL 8.0.21 and 5.6.51, compatibility with other versions is unknown.
 
 For your MySQL server, you can use the following tools :
 - [Wamp](https://www.wampserver.com/) : Windows
