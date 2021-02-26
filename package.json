@@ -24,9 +24,9 @@
   "dependencies": {
     "express": "^4.17.1",
     "http": "0.0.1-security",
+    "mixme": "^0.3.5",
     "mysql": "^2.18.1",
-    "socket.io": "^3.1.1",
-    "mixme": "^0.3.5"
+    "socket.io": "^3.1.1"
   },
   "devDependencies": {
     "chai": "^4.2.0",
@@ -34,6 +34,5 @@
     "eslint": "^7.9.0",
     "eslint-plugin-mocha": "^8.0.0",
     "mocha": "^7.0.1",
-    "mysql-import": "^5.0.21"
   }
 }

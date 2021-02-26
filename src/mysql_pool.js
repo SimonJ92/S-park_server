@@ -1,26 +1,33 @@
 const mysql = require('mysql');
-const Importer = require('mysql-import');
-const Pool = require('mysql/lib/Pool');
 const configure = require('./configure')
+const fs = require('fs');
 
 const config = configure()
 
-const importer = new Importer({
+const creationConnection = mysql.createConnection({
   host: config.mysql.host,
+  port: config.mysql.port,
   user: config.mysql.user,
-  password: config.mysql.password
+  password: config.mysql.password,
+  multipleStatements: true
 })
 
-importer.onProgress(progress=>{
-  var percent = Math.floor(progress.bytes_processed / progress.total_bytes * 10000) / 100;
-  console.log(`${percent}% Completed`);
-})
+const queries = fs.readFileSync(__dirname + '/../s-park_code.sql', { encoding: "UTF-8" }).split('--')
 
-importer.onDumpCompleted(completed => {
-  console.log(completed.file_path+" imported !");
-})
+for (let query of queries) {
+  if (query.length !== 0 && !query.match(/\/\*/) && !query.match(/--/)) {
+    creationConnection.query(query, function (err, res, fields) {
+      if (err) {
+        console.log(`Importing failed for Mysql Database  - Query:\n${query}\n`);
+        console.error(err);
+      }else{
+        //console.log(`Importing Mysql Database  - Query:\n${query}\n`)
+      }
+    })
+  }
+}
 
-importer.import(__dirname + '/../s-park_get_or_create.sql')
+creationConnection.end()
 
 pool = mysql.createPool({
   host: config.mysql.host,

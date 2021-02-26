@@ -1,4 +1,7 @@
 const pool = require('../mysql_pool')
+const configure = require('../configure')
+
+const config = configure()
 
 //loops until a connection is acquired (tries every second). This is needed because the pool tends to take a bit too much time to start, generating an error before giving the results
 const attemptConnection = (sql, callback) => {
@@ -20,16 +23,15 @@ const attemptConnection = (sql, callback) => {
   })
 }
 
-//List all tables to sanitate input down the line
-const tablesList = []
-attemptConnection("select table_name from information_schema.tables where table_schema = 's-park'", (err,res) => {
-  res.forEach(element => {
-    tablesList.push(element.TABLE_NAME)
-  });
-})
-
 module.exports = {
   getAll: (tableName, callback) => {
+    //List all tables to sanitate input down the line
+    const tablesList = []
+    attemptConnection("select table_name from information_schema.tables where table_schema = "+config.mysql.database, (err,res) => {
+      res.forEach(element => {
+        tablesList.push(element.TABLE_NAME)
+      });
+    })
     if(!tablesList.includes(tableName)) callback(new Error("This table doesn't exist"), null)
     else attemptConnection("Select * from "+tableName, callback)
   },
