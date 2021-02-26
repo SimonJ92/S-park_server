@@ -1,5 +1,9 @@
 const { expect } = require('chai')
-let pool = require('../src/mysql_pool')
+let pool
+
+before(() => {
+  pool = require('../src/mysql_pool')
+})
 
 after(() => {
     pool.end()
