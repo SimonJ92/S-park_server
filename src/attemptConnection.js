@@ -4,6 +4,7 @@ const pool = require('./mysql_pool')
 const attemptConnection = (sql, callback) => {
   pool.getConnection((err, connection) => {
     if (err) {
+      console.error(err)
       console.log('error connecting. retrying in 1 sec');
       setTimeout(attemptConnection, 1000);
     } else {

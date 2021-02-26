@@ -6,9 +6,10 @@ before(() => {
   pool = require('../src/mysql_pool')
 })
 
-after(() => {
-    pool.end()
-  })
+after(async () => {
+    await pool.end()
+    console.log("Pool ending")
+})
 
 describe('MySQL', () => {
   it('should connect to MySQL', () => {
