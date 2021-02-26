@@ -5,7 +5,7 @@ This application starts an http server on the user's machine that serves as an m
 
 ## Requirements
 
-This is a NodeJS application, it was developped using node 14.11.0, compatibility with previous versions is unknown. You can download 
+This is a NodeJS application, it was developped using node 14.11.0, compatibility with previous versions is unknown. 
 
 The application needs to be ran along with a MySQL server. The application works with MySQL 8.0.21, compatibility with previous versions is unknown. Tests for MySQL 5.6.51 will be conducted soon.
 
