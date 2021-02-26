@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Tuto WebSocket avec Socket.io et NodeJS par PracticalProgramming.fr</title>
+</head>
+
+<body>
+  <H1>Hello World</H1>
+  
+  <!-- CREATION SOCKET -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    
+    // écoute du socket news
+    socket.on('news', function(msg){
+      console.log(msg)
+      document.write(msg)
+    });
+  </script>
+  
+  <!-- FIN CODE SOCKET -->
+</body>
+</html>

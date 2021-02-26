@@ -1,0 +1,15 @@
+{
+  "mysql": {
+    "host": "127.0.0.1",
+    "port": 3306,
+    "user": "root",
+    "password": "",
+    "database": "s-park",
+    "charset": "UTF8_GENERAL_CI",
+    "multipleStatements": false,
+    "acquireTimeout": 30000,
+    "waitForConnections": true,
+    "connectionLimit": 10,
+    "queueLimit": 0
+  }
+}
