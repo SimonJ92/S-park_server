@@ -3,6 +3,12 @@
 This repository represents the server part of the project S-park. The project aims at reducing the average time spent looking for parking spots in urban environments.  
 This application starts an http server on the user's machine that serves as an middleware between a mobile app, a embedded circuit and a database.
 
+## Build
+
+Continuous integration is assured by Travis [here](https://travis-ci.com/github/SimonJ92/S-park_server)
+
+[![Build Status](https://travis-ci.com/SimonJ92/S-park_server.svg?token=iupp3QJbBM7Y8CqnRq5B&branch=main)](https://travis-ci.com/SimonJ92/S-park_server)
+
 ## Requirements
 
 This is a NodeJS application, it was developped using node 14.11.0, compatibility with previous versions is unknown. 
@@ -44,5 +50,3 @@ npm test
 ```
 
 Make sure that the MySQL server connection is correctly configured. You can change your MySQL server connection parameters [in the configuration file](conf/default.json).
-
-Continuous integration might be added soon.
