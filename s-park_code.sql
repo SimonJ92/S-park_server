@@ -1,0 +1,30 @@
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";--
+SET AUTOCOMMIT = 0;--
+START TRANSACTION;--
+SET time_zone = "+00:00";--
+CREATE DATABASE IF NOT EXISTS `s-park` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;--
+USE `s-park`;--
+CREATE TABLE IF NOT EXISTS `parkingspot` (
+  `CameraId` int(11) NOT NULL,
+  `SpotNumber` int(11) NOT NULL,
+  `IsTaken` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`CameraId`,`SpotNumber`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;--
+CREATE TABLE IF NOT EXISTS `camera` (
+  `CameraId` int(11) NOT NULL AUTO_INCREMENT,
+  `Address` text,
+  PRIMARY KEY (`CameraId`) 
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;--
+DROP procedure  IF EXISTS `add_constraint`;--
+CREATE PROCEDURE `add_constraint`() 
+Begin
+IF NOT EXISTS (SELECT NULL FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
+  WHERE CONSTRAINT_SCHEMA = DATABASE()
+    AND CONSTRAINT_TYPE = 'FOREIGN KEY'
+    AND CONSTRAINT_NAME =   'CameraReference') THEN
+  ALTER TABLE `parkingspot`
+    ADD CONSTRAINT `CameraReference` FOREIGN KEY (`CameraId`) REFERENCES `camera` (`CameraId`) ON DELETE CASCADE ON UPDATE CASCADE;
+END IF ;
+END--
+CALL add_constraint();--
+COMMIT;--

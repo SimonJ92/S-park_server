@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
-    "test": "echo 'WARNING : The tests for interactions with the database require you to have an active MySQL server\nBy default, it must be located on localhost on port 3306 with user root and no password\nYou can change the default parameters in /conf/default.json\n' & mocha test/*.js"
+    "test": "echo 'WARNING : The tests for interactions with the database require you to have an active MySQL server\nBy default, it must be located on localhost on port 3306 with user root and no password\nYou can change the default parameters in /conf/default.json\n' & mocha test/*.js --timeout 10000"
   },
   "repository": {
     "type": "git",
@@ -24,9 +24,9 @@
   "dependencies": {
     "express": "^4.17.1",
     "http": "0.0.1-security",
+    "mixme": "^0.3.5",
     "mysql": "^2.18.1",
-    "socket.io": "^3.1.1",
-    "mixme": "^0.3.5"
+    "socket.io": "^3.1.1"
   },
   "devDependencies": {
     "chai": "^4.2.0",
