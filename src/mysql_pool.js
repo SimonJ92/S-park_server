@@ -55,7 +55,7 @@ pool.on("enqueue",() => {
 })
 
 pool.on('acquire', (connection) => {
-  console.log('Connection %d acquired', connection.threadId);
+  //console.log('Connection %d acquired', connection.threadId);
 })
 
 module.exports = pool

@@ -11,10 +11,10 @@ const attemptConnection = (sql, callback) => {
       connection.query(sql, (errQuery, results) => {
         connection.release();
         if (errQuery) {
-          console.log('Error querying database!');
+          //console.log('Error querying database!');
           console.error(errQuery)
         } else {
-          console.log('Successfully queried database.');
+          //console.log('Successfully queried database.');
           callback(errQuery, results)
         }
       });
