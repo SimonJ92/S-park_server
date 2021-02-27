@@ -15,6 +15,7 @@ describe('Camera controller', () => {
     //The tests on Travis always say that a table is missing before actually acting normal.
     //This is to provoke the error before running any of the tests
     //Any better solution to the problem is welcome
+    console.log("The tests on Travis always say that a table is missing before actually acting normal.This is to provoke the error before running any of the tests. Any better solution to the problem is welcome")
     attemptConnection('SELECT * FROM camera NATURAL JOIN parkingspot LIMIT 1', (err,res) => {})
   })
   
