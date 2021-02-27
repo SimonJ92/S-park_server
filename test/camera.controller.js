@@ -6,16 +6,20 @@ const cameraController = require('../src/controllers/camera')
 //ORDER
 require('./mysql_pool')
 
-pool = require('../src/mysql_pool')
+let pool
 
 describe('Camera controller', () => {
   before(() => {
-    attemptConnection('SELECT * FROM camera NATURAL JOIN parkingspot LIMIT 1', (err,res) => {
-      if (err) {
-        console.log('error connecting. retrying in 1 sec');
-        setTimeout(attemptConnection, 1000);
-      }
-    })
+    pool = require('../src/mysql_pool')
+    // attemptConnection('SELECT * FROM camera NATURAL JOIN parkingspot LIMIT 1', (err,res) => {
+    //   if (err) {
+    //     console.log('error connecting. retrying in 1 sec');
+    //     setTimeout(attemptConnection, 1000);
+    //   }
+    // })
+    setTimeout(() => {
+      
+    }, 2000);
   })
   
   describe('Cameras :', () => {
