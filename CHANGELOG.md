@@ -12,3 +12,8 @@
 ## 26/02
 
 - Added continuous integration with Travis
+- Fixed mysql connection to make sure that the database exists before creating the connection pool
+
+# 27/02
+
+- 

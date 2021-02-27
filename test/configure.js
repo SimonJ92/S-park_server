@@ -2,7 +2,7 @@ const { expect } = require('chai')
 const configure = require('../src/configure')
 
 describe('Configure', () => {
-  it('load default json configuration file', () => {
+  it('load default json configuration file', (done) => {
     const config = configure()
     expect(config.mysql).to.eql({
       "host": "127.0.0.1",
@@ -16,8 +16,9 @@ describe('Configure', () => {
       "waitForConnections": true,
       "connectionLimit": 10,
       "queueLimit": 0})
+      done()
     })
-    it('load custom configuration', () => {
+    it('load custom configuration', (done) => {
       const config_custom = {"custom": "value"}
       const config = configure(config_custom)
       expect(config).to.eql({"mysql": {
@@ -33,6 +34,7 @@ describe('Configure', () => {
         "connectionLimit": 10,
         "queueLimit": 0
       }, "custom": "value"})
+      done()
     })
   })
   
