@@ -11,15 +11,11 @@ let pool
 describe('Camera controller', () => {
   before(() => {
     pool = require('../src/mysql_pool')
-    // attemptConnection('SELECT * FROM camera NATURAL JOIN parkingspot LIMIT 1', (err,res) => {
-    //   if (err) {
-    //     console.log('error connecting. retrying in 1 sec');
-    //     setTimeout(attemptConnection, 1000);
-    //   }
-    // })
-    setTimeout(() => {
-      
-    }, 2000);
+
+    //The tests on Travis always say that a table is missing before actually acting normal.
+    //This is to provoke the error before running any of the tests
+    //Any better solution to the problem is welcome
+    attemptConnection('SELECT * FROM camera NATURAL JOIN parkingspot LIMIT 1', (err,res) => {})
   })
   
   describe('Cameras :', () => {
