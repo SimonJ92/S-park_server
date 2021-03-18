@@ -21,8 +21,8 @@ module.exports = {
   
   //CAMERAS
   
-  createCamera: (address, callback) => {
-    attemptConnection(`INSERT INTO camera VALUES (NULL, ${mysql.escape(address)});`, (err, res) => {
+  createCamera: (latitude,longitude, callback) => {
+    attemptConnection(`INSERT INTO camera VALUES (NULL, ${mysql.escape(latitude)}, ${mysql.escape(longitude)});`, (err, res) => {
       if (err) throw err
       else {
         res.result = 'OK'
@@ -32,21 +32,22 @@ module.exports = {
     })
   },
   getCameraInfos: (cameraId, callback) => {
-    attemptConnection(`SELECT Address FROM camera WHERE Cameraid = `+mysql.escape(cameraId), (err, res) => {
+    attemptConnection(`SELECT latitude,longitude FROM camera WHERE Cameraid = `+mysql.escape(cameraId), (err, res) => {
       if(err) throw err
       else {
         if(!res[0]) {
           return callback(new Error("Camera doesn't exist"), null)
         } else {
-          res.address = res[0].Address
+          res.latitude = res[0].latitude
+          res.longitude = res[0].longitude
           res.result = 'OK'
           callback(err,res)
         }
       }
     })
   },
-  updateCameraInfos: (cameraId, address, callback) => {
-    attemptConnection(`UPDATE camera SET Address = ${mysql.escape(address)} WHERE Cameraid = `+mysql.escape(cameraId), (err,res) => {
+  updateCameraInfos: (cameraId, latitude, longitude, callback) => {
+    attemptConnection(`UPDATE camera SET latitude = ${mysql.escape(latitude)}, longitude = ${mysql.escape(longitude)} WHERE Cameraid = `+mysql.escape(cameraId), (err,res) => {
       if (err) throw err
       else {
         res.result = 'OK'

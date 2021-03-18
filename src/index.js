@@ -1,7 +1,7 @@
 const app = require('express')()
 const http = require('http').createServer(app)
 const cameraRouter = require('./routers/camera')
-const mobileRouter = require('./routers/mobile')
+const parkingspotRouter = require('./routers/parkingspot')
 const bodyParser = require('body-parser')
 const pool = require ('./mysql_pool')
 
@@ -25,7 +25,7 @@ app.get('/stop', (req,res) => {
 app.use('/camera', cameraRouter)
 
 //all urls using /mobile will be redirected to the mobile app router
-app.use('/mobile', mobileRouter)
+app.use('/mobile', parkingspotRouter)
 
 //Socket Logic
 const socketio = require('socket.io')(http)
