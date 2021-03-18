@@ -4,6 +4,8 @@ node_js:
 - '14'
 services:
 - mysql
+before_install:
+  - mysql -u root --password="" < s-park.sql
 script:
 - echo 'Starting'
 - npm install

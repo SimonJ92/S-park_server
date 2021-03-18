@@ -36,7 +36,7 @@ module.exports = {
       if(err) throw err
       else {
         if(!res[0]) {
-          callback(new Error("Camera doesn't exist"), null)
+          return callback(new Error("Camera doesn't exist"), null)
         } else {
           res.address = res[0].Address
           res.result = 'OK'

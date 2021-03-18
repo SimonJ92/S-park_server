@@ -11,12 +11,6 @@ let pool
 describe('Camera controller', () => {
   before(() => {
     pool = require('../src/mysql_pool')
-    
-    //The tests always say that a table is missing if tables didn't exist before launch before actually acting normal.
-    //This is to provoke the error before running any of the tests
-    //Any better solution to the problem is welcome
-    console.log("The tests always say that a table is missing if tables didn't exist before launch before actually acting normal.This is to provoke the error before running any of the tests. Any better solution to the problem is welcome.\n")
-    attemptConnection('SELECT * FROM camera NATURAL JOIN parkingspot LIMIT 1', (err,res) => {})
   })
   
   describe('Parking spots', () => {
