@@ -22,6 +22,8 @@ module.exports = {
   //CAMERAS
   
   createCamera: (latitude,longitude, callback) => {
+    if(!latitude || !longitude)
+      return callback(new Error("Wrong parameters"), null)
     attemptConnection(`INSERT INTO camera VALUES (NULL, ${mysql.escape(latitude)}, ${mysql.escape(longitude)});`, (err, res) => {
       if (err) throw err
       else {
@@ -32,6 +34,8 @@ module.exports = {
     })
   },
   getCameraInfos: (cameraId, callback) => {
+    if(!cameraId)
+      return callback(new Error("Wrong parameters"), null)
     attemptConnection(`SELECT latitude,longitude FROM camera WHERE Cameraid = `+mysql.escape(cameraId), (err, res) => {
       if(err) throw err
       else {
@@ -47,6 +51,8 @@ module.exports = {
     })
   },
   updateCameraInfos: (cameraId, latitude, longitude, callback) => {
+    if(!cameraId || !latitude || !longitude)
+      return callback(new Error("Wrong parameters"), null)
     attemptConnection(`UPDATE camera SET latitude = ${mysql.escape(latitude)}, longitude = ${mysql.escape(longitude)} WHERE Cameraid = `+mysql.escape(cameraId), (err,res) => {
       if (err) throw err
       else {
@@ -56,6 +62,8 @@ module.exports = {
     })
   },
   deleteCamera: (cameraId, callback) => {
+    if(!cameraId)
+      return callback(new Error("Wrong parameters"), null)
     attemptConnection(`DELETE FROM camera WHERE Cameraid = `+mysql.escape(cameraId), (err,res) => {
       if (err) throw err
       else {

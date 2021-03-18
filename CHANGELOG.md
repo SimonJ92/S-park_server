@@ -26,3 +26,6 @@
 # 18/03
 
 - Finished controllers and tests
+- Changed database model
+- Listed all tests for routers
+- Started writing routers and their tests
