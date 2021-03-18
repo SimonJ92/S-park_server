@@ -16,4 +16,13 @@
 
 # 27/02
 
-- 
+- Finished camera controller along with tests
+
+# 15/03
+
+- Reorganized files
+- Started parkingspot controller along with tests
+
+# 18/03
+
+- Finished controllers and tests

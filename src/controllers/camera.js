@@ -6,6 +6,7 @@ const mysql = require('mysql')
 const config = configure()
 
 module.exports = {
+  //TODO : remove
   getAll: (tableName, callback) => {
     //List all tables to sanitate input down the line
     attemptConnection(`SELECT ${mysql.escape(table_name)} FROM information_schema.tables where table_schema = "${config.mysql.database}"`, (err,res) => {
@@ -34,9 +35,13 @@ module.exports = {
     attemptConnection(`SELECT Address FROM camera WHERE Cameraid = `+mysql.escape(cameraId), (err, res) => {
       if(err) throw err
       else {
-        res.address = res[0].Address
-        res.result = 'OK'
-        callback(err,res)
+        if(!res[0]) {
+          callback(new Error("Camera doesn't exist"), null)
+        } else {
+          res.address = res[0].Address
+          res.result = 'OK'
+          callback(err,res)
+        }
       }
     })
   },
@@ -58,22 +63,4 @@ module.exports = {
       }
     })
   },
-  
-  //PARKING SPOTS
-  
-  createParkingSpot: (cameraId, spotId, callback) => {
-    attemptConnection(`INSERT INTO parkingspot VALUES(${mysql.escape(cameraId)},${mysql.escape(spotId)},TRUE)`, (err,res) => {
-      if (err) throw err
-      else {
-        res.result = 'OK'
-        callback(err,res)
-      }
-    })
-  },
-  updateParkingSpot: (cameraId, spotId, state, callback) => {
-    
-  },
-  deleteParkingSpot: (cameraId, spotId, callback) => {
-    
-  }
 }
