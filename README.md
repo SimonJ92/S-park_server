@@ -19,6 +19,11 @@ For your MySQL server, you can use the following tools :
 - [Wamp](https://www.wampserver.com/) : Windows
 - [Xampp](https://www.apachefriends.org/index.html) : Windows, Linux, OS X
 
+Before using the server, you must import the database configuration from the [sql dump](s-park.sql). This can be done through the graphical user interface of your MySQL server or through the command line interface if mysql is installed on your system:
+```bash
+mysql -u root --password="" < s-park.sql
+```
+
 ## Installation
 
 Install the application using the following commands :

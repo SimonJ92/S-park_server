@@ -11,11 +11,6 @@ let pool
 describe('Camera controller', () => {
   before(() => {
     pool = require('../src/mysql_pool')
-
-    //The tests on Travis always say that a table is missing before actually acting normal.
-    //This is to provoke the error before running any of the tests
-    //Any better solution to the problem is welcome
-    attemptConnection('SELECT * FROM camera NATURAL JOIN parkingspot LIMIT 1', (err,res) => {})
   })
   
   describe('Cameras :', () => {
@@ -25,6 +20,14 @@ describe('Camera controller', () => {
         expect(err).to.be.null
         expect(res.result).to.equal('OK')
         expect(Number.isInteger(res.cameraId)).to.be.true
+        done()
+      })
+    })
+
+    it('Cannot get a non-existent camera\'s infos', (done) => {
+      cameraController.getCameraInfos(-1, (err,res) => {
+        expect(err).to.not.be.null
+        expect(res).to.be.null
         done()
       })
     })
@@ -74,42 +77,6 @@ describe('Camera controller', () => {
           done()
         })
       })
-    })
-  })
-  
-  describe('Parking spots', () => {
-    
-    it('Create new parking spot', (done) => {
-      cameraController.createCamera('Address', (err, res) => {
-        expect(err).to.be.null
-        expect(res.result).to.equal('OK')
-        expect(Number.isInteger(res.cameraId)).to.be.true
-        cameraController.createParkingSpot(res.cameraId, 1, (err, res) => {
-          expect(err).to.be.null
-          expect(res.result).to.equal('OK')
-          pool.end()
-          done()
-        })
-      })
-      
-    })
-    
-    it.skip('Update a parking spot', (done) => {
-      
-      pool.end()
-      done()
-    })
-    
-    it.skip('Delete a parking spot', (done) => {
-      
-      pool.end()
-      done()
-    })
-    
-    it.skip('Delete a parking spot by deleting the camera', (done) => {
-      
-      pool.end()
-      done()
     })
   })
 })
