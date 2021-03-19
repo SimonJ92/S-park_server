@@ -120,7 +120,6 @@ describe('Parking spot controller', () => {
           parkingspotController.getParkingSpotInfos(res1.cameraId, res2.spotId, (err4,res4) => {
             expect(err4).to.not.be.null
             expect(res4).to.be.null
-            pool.end()
             done()
           })
         })

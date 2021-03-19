@@ -6,26 +6,13 @@ const mysql = require('mysql')
 const config = configure()
 
 module.exports = {
-  //TODO : remove
-  getAll: (tableName, callback) => {
-    //List all tables to sanitate input down the line
-    attemptConnection(`SELECT ${mysql.escape(table_name)} FROM information_schema.tables where table_schema = "${config.mysql.database}"`, (err,res) => {
-      const tablesList = []
-      res.forEach(element => {
-        tablesList.push(element.table_name)
-      });
-      if(!tablesList.includes(tableName)) callback(new Error("This table doesn't exist"), null)
-      else attemptConnection("Select * from "+tableName, callback)
-    })
-  },
-  
   //CAMERAS
   
   createCamera: (latitude,longitude, callback) => {
     if(!latitude || !longitude)
     return callback(new Error("Wrong parameters"), null)
     attemptConnection(`INSERT INTO camera VALUES (NULL, ${mysql.escape(latitude)}, ${mysql.escape(longitude)});`, (err, res) => {
-      if (err) throw err
+      if (err) return callback(err,null)
       else {
         res.result = 'OK'
         res.cameraId = res.insertId
@@ -37,7 +24,7 @@ module.exports = {
     if(!cameraId)
     return callback(new Error("Wrong parameters"), null)
     attemptConnection(`SELECT latitude,longitude FROM camera WHERE Cameraid = `+mysql.escape(cameraId), (err, res) => {
-      if(err) throw err
+      if(err) return callback(err,null)
       else {
         if(!res[0]) {
           return callback(new Error("Camera doesn't exist"), null)
@@ -52,10 +39,10 @@ module.exports = {
   },
   listCameraInfos: (callback) => {
     attemptConnection(`SELECT Cameraid,latitude,longitude FROM camera`, (err, res) => {
-      if(err) throw err
+      if(err) return callback(err,null)
       else {
         if(!res[0]) {
-          return callback(new Error("Camera doesn't exist"), null)
+          return callback(new Error("No camera exists"), null)
         } else {
           var list = []
           res.forEach(row => {
@@ -76,8 +63,9 @@ module.exports = {
     if(!cameraId || !latitude || !longitude)
     return callback(new Error("Wrong parameters"), null)
     attemptConnection(`UPDATE camera SET latitude = ${mysql.escape(latitude)}, longitude = ${mysql.escape(longitude)} WHERE Cameraid = `+mysql.escape(cameraId), (err,res) => {
-      if (err) throw err
+      if (err) return callback(err,null)
       else {
+        if (!res.affectedRows) return callback(new Error("Camera doesn't exist"), null)
         res.result = 'OK'
         callback(err,res)
       }
@@ -87,8 +75,10 @@ module.exports = {
     if(!cameraId)
     return callback(new Error("Wrong parameters"), null)
     attemptConnection(`DELETE FROM camera WHERE Cameraid = `+mysql.escape(cameraId), (err,res) => {
-      if (err) throw err
+      if (err) return callback(err,null)
       else {
+        
+        if (!res.affectedRows) return callback(new Error("Camera doesn't exist"), null)
         res.result = 'OK'
         callback(err,res)
       }

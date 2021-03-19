@@ -23,7 +23,7 @@ describe('Camera REST API', () => {
       .then((res) => {
         chai.expect(res).to.have.status(201)
         chai.expect(res.body.status).to.equal('success')
-        chai.expect(res.body.cameraId).to.not.be.null
+        chai.expect(res.body.cameraId).to.not.be.undefined
         chai.expect(res).to.be.json
         done()
       })
@@ -63,7 +63,7 @@ describe('Camera REST API', () => {
       .then((res) => {
         chai.expect(res).to.have.status(201)
         chai.expect(res.body.status).to.equal('success')
-        chai.expect(res.body.cameraId).to.not.be.null
+        chai.expect(res.body.cameraId).to.not.be.undefined
         chai.expect(res).to.be.json
         
         chai.request(app)
@@ -108,7 +108,7 @@ describe('Camera REST API', () => {
       .then((res) => {
         chai.expect(res).to.have.status(201)
         chai.expect(res.body.status).to.equal('success')
-        chai.expect(res.body.cameraId).to.not.be.null
+        chai.expect(res.body.cameraId).to.not.be.undefined
         chai.expect(res).to.be.json
         
         chai.request(app)
@@ -131,12 +131,12 @@ describe('Camera REST API', () => {
       })
     })
     
-    it.skip('Get cameras by address', (done) => {
+    it.skip('Get cameras with available spots by address', (done) => {
       done()
     })
   })
   
-  describe('PUT /camera', () => {
+  describe('PATCH /camera', () => {
     it('Update a camera\'s address', (done) => {
       const camera = {
         latitude: 1.99,
@@ -148,7 +148,7 @@ describe('Camera REST API', () => {
       .then((res1) => {
         chai.expect(res1).to.have.status(201)
         chai.expect(res1.body.status).to.equal('success')
-        chai.expect(res1.body.cameraId).to.not.be.null
+        chai.expect(res1.body.cameraId).to.not.be.undefined
         chai.expect(res1).to.be.json
         
         const cameraUpdated = {
@@ -157,7 +157,7 @@ describe('Camera REST API', () => {
         }
         
         chai.request(app)
-        .put('/camera/'+res1.body.cameraId)
+        .patch('/camera/'+res1.body.cameraId)
         .send(cameraUpdated)
         .then((res2) => {
           chai.expect(res2).to.have.status(201)
@@ -195,7 +195,7 @@ describe('Camera REST API', () => {
       .then((res1) => {
         chai.expect(res1).to.have.status(201)
         chai.expect(res1.body.status).to.equal('success')
-        chai.expect(res1.body.cameraId).to.not.be.null
+        chai.expect(res1.body.cameraId).to.not.be.undefined
         chai.expect(res1).to.be.json
         
         const cameraUpdated = {
@@ -203,7 +203,7 @@ describe('Camera REST API', () => {
         }
         
         chai.request(app)
-        .put('/camera/'+res1.body.cameraId)
+        .patch('/camera/'+res1.body.cameraId)
         .send(cameraUpdated)
         .then((res2) => {
           chai.expect(res2).to.have.status(400)
@@ -232,13 +232,8 @@ describe('Camera REST API', () => {
       .then((res1) => {
         chai.expect(res1).to.have.status(201)
         chai.expect(res1.body.status).to.equal('success')
-        chai.expect(res1.body.cameraId).to.not.be.null
+        chai.expect(res1.body.cameraId).to.not.be.undefined
         chai.expect(res1).to.be.json
-        
-        const cameraUpdated = {
-          latitude : -1,
-          longitude : -2
-        }
         
         chai.request(app)
         .delete('/camera/'+res1.body.cameraId)

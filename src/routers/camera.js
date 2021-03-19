@@ -53,7 +53,7 @@ cameraRouter.get('/', (req,resp) => {
   })
 })
 
-cameraRouter.put('/:cameraId', (req,resp) => {
+cameraRouter.patch('/:cameraId', (req,resp) => {
   controller.updateCameraInfos(req.params.cameraId,req.body.latitude, req.body.longitude, (err,res) => {
     if (err) {
       respObj = {
@@ -83,20 +83,6 @@ cameraRouter.delete('/:cameraId', (req,resp) => {
       status: "success"
     }
     resp.status(201).json(respObj)
-  })
-})
-
-//TODO : remove
-cameraRouter.get('/:tableName', (req,res) => {
-  controller.getAll(req.params.tableName, (err,resp) => {
-    if(err){
-      let respObj = {
-        status: "error",
-        msg: err.message
-      }
-      return res.status(400).json(respObj)
-    }
-    res.status(200).json(resp)
   })
 })
 

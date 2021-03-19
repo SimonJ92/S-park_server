@@ -25,7 +25,7 @@ app.get('/stop', (req,res) => {
 app.use('/camera', cameraRouter)
 
 //all urls using /mobile will be redirected to the mobile app router
-app.use('/mobile', parkingspotRouter)
+app.use('/parkingspot', parkingspotRouter)
 
 //Socket Logic
 const socketio = require('socket.io')(http)
