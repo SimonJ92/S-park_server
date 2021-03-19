@@ -29,3 +29,8 @@
 - Changed database model
 - Listed all tests for routers
 - Started writing routers and their tests
+
+# 19/03
+
+- Added missing functions in controllers
+- Finished camera router apart from finding cameras by address

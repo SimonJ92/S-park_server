@@ -14,11 +14,79 @@ cameraRouter.post('/', (req,resp) => {
     }
     respObj = {
       status: "success",
+      cameraId: res.cameraId,
     }
     resp.status(201).json(respObj)
   })
 })
 
+cameraRouter.get('/:cameraId', (req,resp) => {
+  controller.getCameraInfos(req.params.cameraId, (err,res) => {
+    if (err) {
+      respObj = {
+        status: "error",
+        msg: err.message
+      }
+      return resp.status(400).json(respObj)
+    }
+    respObj = {
+      latitude : res.latitude,
+      longitude: res.longitude,
+    }
+    resp.status(200).json(respObj)
+  })
+})
+
+cameraRouter.get('/', (req,resp) => {
+  controller.listCameraInfos((err,res) => {
+    if (err) {
+      respObj = {
+        status: "error",
+        msg: err.message
+      }
+      return resp.status(400).json(respObj)
+    }
+    respObj = {
+      list: res.list
+    }
+    resp.status(200).json(respObj)
+  })
+})
+
+cameraRouter.put('/:cameraId', (req,resp) => {
+  controller.updateCameraInfos(req.params.cameraId,req.body.latitude, req.body.longitude, (err,res) => {
+    if (err) {
+      respObj = {
+        status: "error",
+        msg: err.message
+      }
+      return resp.status(400).json(respObj)
+    }
+
+    respObj = {
+      status: "success"
+    }
+    resp.status(201).json(respObj)
+  })
+})
+
+cameraRouter.delete('/:cameraId', (req,resp) => {
+  controller.deleteCamera(req.params.cameraId, (err,res) => {
+    if (err) {
+      respObj = {
+        status: "error",
+        msg: err.message
+      }
+      return resp.status(400).json(respObj)
+    }
+    respObj = {
+      status: "success"
+    }
+    resp.status(201).json(respObj)
+  })
+})
+
+//TODO : remove
 cameraRouter.get('/:tableName', (req,res) => {
   controller.getAll(req.params.tableName, (err,resp) => {
     if(err){

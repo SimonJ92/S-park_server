@@ -23,7 +23,7 @@ module.exports = {
   
   createCamera: (latitude,longitude, callback) => {
     if(!latitude || !longitude)
-      return callback(new Error("Wrong parameters"), null)
+    return callback(new Error("Wrong parameters"), null)
     attemptConnection(`INSERT INTO camera VALUES (NULL, ${mysql.escape(latitude)}, ${mysql.escape(longitude)});`, (err, res) => {
       if (err) throw err
       else {
@@ -35,7 +35,7 @@ module.exports = {
   },
   getCameraInfos: (cameraId, callback) => {
     if(!cameraId)
-      return callback(new Error("Wrong parameters"), null)
+    return callback(new Error("Wrong parameters"), null)
     attemptConnection(`SELECT latitude,longitude FROM camera WHERE Cameraid = `+mysql.escape(cameraId), (err, res) => {
       if(err) throw err
       else {
@@ -50,9 +50,31 @@ module.exports = {
       }
     })
   },
+  listCameraInfos: (callback) => {
+    attemptConnection(`SELECT Cameraid,latitude,longitude FROM camera`, (err, res) => {
+      if(err) throw err
+      else {
+        if(!res[0]) {
+          return callback(new Error("Camera doesn't exist"), null)
+        } else {
+          var list = []
+          res.forEach(row => {
+            list.push({
+              id: row.Cameraid,
+              latitude : row.latitude,
+              longitude : row.longitude
+            }) 
+          })
+          res.list = list
+          res.result = 'OK'
+          callback(err,res)
+        }
+      }
+    })
+  },
   updateCameraInfos: (cameraId, latitude, longitude, callback) => {
     if(!cameraId || !latitude || !longitude)
-      return callback(new Error("Wrong parameters"), null)
+    return callback(new Error("Wrong parameters"), null)
     attemptConnection(`UPDATE camera SET latitude = ${mysql.escape(latitude)}, longitude = ${mysql.escape(longitude)} WHERE Cameraid = `+mysql.escape(cameraId), (err,res) => {
       if (err) throw err
       else {
@@ -63,7 +85,7 @@ module.exports = {
   },
   deleteCamera: (cameraId, callback) => {
     if(!cameraId)
-      return callback(new Error("Wrong parameters"), null)
+    return callback(new Error("Wrong parameters"), null)
     attemptConnection(`DELETE FROM camera WHERE Cameraid = `+mysql.escape(cameraId), (err,res) => {
       if (err) throw err
       else {

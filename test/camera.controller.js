@@ -44,6 +44,23 @@ describe('Camera controller', () => {
       })
     })
   })
+
+  it('Get all the cameras\' infos', (done) => {
+    cameraController.createCamera(1, 2, (err1, res1) => {
+      expect(err1).to.be.null
+      expect(res1.result).to.equal('OK')
+      expect(Number.isInteger(res1.cameraId)).to.be.true
+      cameraController.listCameraInfos((err2,res2) => {
+        expect(err2).to.be.null
+        expect(res2.result).to.equal('OK')
+        expect(res2.list).to.have.lengthOf.at.least(1)
+        expect(res2.list[0].id).to.not.be.undefined
+        expect(res2.list[0].latitude).to.not.be.undefined
+        expect(res2.list[0].longitude).to.not.be.undefined
+        done()
+      })
+    })
+  })
   
   it('Update a camera\'s infos', (done) => {
     cameraController.createCamera(1, 2, (err1, res1) => {
