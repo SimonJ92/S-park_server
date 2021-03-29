@@ -45,7 +45,8 @@ CREATE TABLE IF NOT EXISTS `parkingspot` (
 
 CREATE TABLE IF NOT EXISTS `camera` (
   `CameraId` int(11) NOT NULL AUTO_INCREMENT,
-  `Address` text,
+  `latitude` double NOT NULL DEFAULT '0',
+  `longitude` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`CameraId`) 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
