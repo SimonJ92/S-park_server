@@ -35,3 +35,8 @@
 - Added missing functions in controllers
 - Finished camera router apart from finding cameras by address
 - Started writing tests for the parking spots router
+
+# 29/03
+
+- Finished parkingspot router
+- Listed all routes in README.md

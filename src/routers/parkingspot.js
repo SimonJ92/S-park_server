@@ -69,4 +69,47 @@ parkingspotRouter.get('/', (req,resp) => {
   })
 })
 
+parkingspotRouter.patch('/:cameraId/:spotId/:newState', (req,resp) => {
+  newState = parseInt(req.params.newState)
+  if (newState != 0 && newState != 1) {
+    respObj = {
+      status: "error",
+      msg: "Ths state of a parking spot can only be 0 or 1"
+    }
+    return resp.status(400).json(respObj)
+  }
+  controller.updateParkingSpot(req.params.cameraId,req.params.spotId,newState, (err,res) => {
+    if (err) {
+      respObj = {
+        status: "error",
+        msg: err.message
+      }
+      return resp.status(400).json(respObj)
+    }
+    respObj = {
+      status: "success"
+    }
+    resp.status(201).json(respObj)
+  })
+})
+
+parkingspotRouter.delete('/:cameraId/:spotId', (req,resp) => {
+  controller.deleteParkingSpot(req.params.cameraId,req.params.spotId, (err,res) => {
+    if (err) {
+      respObj = {
+        status: "error",
+        msg: err.message
+      }
+      if (respObj.msg === "Camera or parking spot doesn't exist") {
+        return resp.status(404).json(respObj)
+      }
+      return resp.status(400).json(respObj)
+    }
+    respObj = {
+      status: "success"
+    }
+    resp.status(201).json(respObj)
+  })
+})
+
 module.exports = parkingspotRouter

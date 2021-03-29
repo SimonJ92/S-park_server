@@ -251,12 +251,12 @@ describe('Parking spot REST API', () => {
   })
   
   describe('PATCH /parkingspot', () => {
-    it.skip('Update a parking spot\'s address', (done) => {
+    it('Update a parking spot\'s state', (done) => {
       const camera = {
         latitude: 1.99,
         longitude: 2.99,
       }
-      const parkingspotId = 5
+      const parkingspotId = 10
       
       chai.request(app)
       .post('/camera')
@@ -273,7 +273,31 @@ describe('Parking spot REST API', () => {
           chai.expect(res2).to.have.status(201)
           chai.expect(res2.body.status).to.equal('success')
           chai.expect(res2).to.be.json
-          done()
+          
+          chai.request(app)
+          .patch(`/parkingspot/${res1.body.cameraId}/${parkingspotId}/1`)
+          .then((res3) => {
+            chai.expect(res3).to.have.status(201)
+            chai.expect(res3.body.status).to.equal("success")
+            
+            chai.request(app)
+            .get(`/parkingspot/${res1.body.cameraId}/${parkingspotId}`)
+            .then((res4) => {
+              chai.expect(res4).to.have.status(200)
+              chai.expect(res4.body).to.eql({
+                status: "success",
+                isTaken: true
+              })
+              chai.expect(res4).to.be.json
+              done()
+            })
+            .catch((err) => {
+              throw err
+            })
+          })
+          .catch((err) => {
+            throw err
+          })
         })
         .catch((err) => {
           throw err
@@ -284,12 +308,12 @@ describe('Parking spot REST API', () => {
       })
     })
     
-    it.skip('Cannot update a non-existent parking spot', (done) => {
+    it('Passing wrong parameters', (done) => {
       const camera = {
         latitude: 1.99,
         longitude: 2.99,
       }
-      const parkingspotId = 5
+      const parkingspotId = 15
       
       chai.request(app)
       .post('/camera')
@@ -306,7 +330,17 @@ describe('Parking spot REST API', () => {
           chai.expect(res2).to.have.status(201)
           chai.expect(res2.body.status).to.equal('success')
           chai.expect(res2).to.be.json
-          done()
+          
+          chai.request(app)
+          .patch(`/parkingspot/${res1.body.cameraId}/${parkingspotId}/100`)
+          .then((res3) => {
+            chai.expect(res3).to.have.status(400)
+            chai.expect(res3.body.status).to.equal("error")
+            done()
+          })
+          .catch((err) => {
+            throw err
+          })
         })
         .catch((err) => {
           throw err
@@ -319,12 +353,12 @@ describe('Parking spot REST API', () => {
   })
   
   describe('DELETE /parkingspot', () => {
-    it.skip('Delete a parking spot by ids', (done) => {
+    it('Delete a parking spot by ids', (done) => {
       const camera = {
         latitude: 1.99,
         longitude: 2.99,
       }
-      const parkingspotId = 5
+      const parkingspotId = 20
       
       chai.request(app)
       .post('/camera')
@@ -341,6 +375,60 @@ describe('Parking spot REST API', () => {
           chai.expect(res2).to.have.status(201)
           chai.expect(res2.body.status).to.equal('success')
           chai.expect(res2).to.be.json
+          
+          chai.request(app)
+          .delete(`/parkingspot/${res1.body.cameraId}/${parkingspotId}`)
+          .then((res3) => {
+            //console.log(res3)
+            chai.expect(res3).to.have.status(201)
+            chai.expect(res3.body.status).to.equal('success')
+            
+            chai.request(app)
+            .get(`/parkingspot/${res1.body.cameraId}/${parkingspotId}`)
+            .then((res4) => {
+              chai.expect(res4).to.have.status(400)
+              chai.expect(res4.body.status).to.equal('error')
+              chai.expect(res4).to.be.json
+              done()
+            })
+            .catch((err) => {
+              throw err
+            })
+          })
+          .catch((err) => {
+            throw err
+          })
+        })
+        .catch((err) => {
+          throw err
+        })
+      })
+      .catch((err) => {
+        throw err
+      })
+    })
+    
+    it('Cannot delete non-existent parking spot', (done) => {
+      const camera = {
+        latitude: 1.99,
+        longitude: 2.99,
+      }
+      const parkingspotId = 20
+      
+      chai.request(app)
+      .post('/camera')
+      .send(camera)
+      .then((res1) => {
+        chai.expect(res1).to.have.status(201)
+        chai.expect(res1.body.status).to.equal('success')
+        chai.expect(res1.body.cameraId).to.not.be.undefined
+        chai.expect(res1).to.be.json
+        
+        chai.request(app)
+        .delete(`/parkingspot/${res1.body.cameraId}/${parkingspotId}`)
+        .then((res3) => {
+          chai.expect(res3).to.have.status(404)
+          chai.expect(res3.body.status).to.equal('error')
           done()
         })
         .catch((err) => {
@@ -352,12 +440,12 @@ describe('Parking spot REST API', () => {
       })
     })
     
-    it.skip('Cannot delete non-existent parking spot', (done) => {
+    it('Deleting a camera removes all its parking spots', (done) => {
       const camera = {
         latitude: 1.99,
         longitude: 2.99,
       }
-      const parkingspotId = 5
+      const parkingspotId = 25
       
       chai.request(app)
       .post('/camera')
@@ -374,7 +462,28 @@ describe('Parking spot REST API', () => {
           chai.expect(res2).to.have.status(201)
           chai.expect(res2.body.status).to.equal('success')
           chai.expect(res2).to.be.json
-          done()
+          
+          chai.request(app)
+          .delete('/camera/'+res1.body.cameraId)
+          .then((res3) => {
+            chai.expect(res3).to.have.status(201)
+            chai.expect(res3.body.status).to.equal('success')
+            
+            chai.request(app)
+            .get(`/parkingspot/${res1.body.cameraId}/${parkingspotId}`)
+            .then((res4) => {
+              chai.expect(res4).to.have.status(400)
+              chai.expect(res4.body.status).to.equal('error')
+              chai.expect(res4).to.be.json
+              done()
+            })
+            .catch((err) => {
+              throw err
+            })
+          })
+          .catch((err) => {
+            throw err
+          })
         })
         .catch((err) => {
           throw err

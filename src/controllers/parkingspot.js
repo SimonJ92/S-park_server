@@ -99,7 +99,7 @@ module.exports = {
     attemptConnection(`DELETE FROM parkingspot WHERE CameraId = `+mysql.escape(cameraId)+` AND SpotNumber = `+mysql.escape(spotId), (err,res) => {
       if (err) return callback(err,null)
       else {
-        if (!res.affectedRows) return callback(new Error("Camera doesn't exist"), null)
+        if (!res.affectedRows) return callback(new Error("Camera or parking spot doesn't exist"), null)
         res.result = 'OK'
         callback(err,res)
       }
