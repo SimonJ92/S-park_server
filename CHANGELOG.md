@@ -26,3 +26,17 @@
 # 18/03
 
 - Finished controllers and tests
+- Changed database model
+- Listed all tests for routers
+- Started writing routers and their tests
+
+# 19/03
+
+- Added missing functions in controllers
+- Finished camera router apart from finding cameras by address
+- Started writing tests for the parking spots router
+
+# 29/03
+
+- Finished parkingspot router
+- Listed all routes in README.md

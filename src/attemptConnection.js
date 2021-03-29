@@ -12,7 +12,8 @@ const attemptConnection = (sql, callback) => {
         connection.release();
         if (errQuery) {
           //console.log('Error querying database!');
-          console.error(errQuery)
+          //console.error(errQuery)
+          callback(errQuery, null)
         } else {
           //console.log('Successfully queried database.');
           callback(errQuery, results)
