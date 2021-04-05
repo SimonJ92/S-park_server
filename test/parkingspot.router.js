@@ -248,6 +248,59 @@ describe('Parking spot REST API', () => {
         throw err
       })
     })
+
+    it('Get cameras with available spots by address', (done) => {
+      const camera = {
+        latitude: 48.858483334533695,
+        longitude: 2.294519957503645,
+      }
+      const parkingspotId = 5
+      const address = {
+        latitude: 48.85169,
+        longitude: 2.28703,
+      }
+      
+      chai.request(app)
+      .post('/camera')
+      .send(camera)
+      .then((res1) => {
+        chai.expect(res1).to.have.status(201)
+        chai.expect(res1.body.status).to.equal('success')
+        chai.expect(res1.body.cameraId).to.not.be.undefined
+        chai.expect(res1).to.be.json
+        
+        chai.request(app)
+        .post(`/parkingspot/${res1.body.cameraId}/${parkingspotId}`)
+        .then((res2) => {
+          chai.expect(res2).to.have.status(201)
+          chai.expect(res2.body.status).to.equal('success')
+          chai.expect(res2).to.be.json
+          
+          chai.request(app)
+          .get(`/parkingspot/near/${address.latitude}/${address.longitude}`)
+          .then((res3) => {
+            chai.expect(res3).to.have.status(200)
+            chai.expect(res3).to.be.json
+            chai.expect(res3.body.list).to.have.lengthOf.at.least(1)
+            chai.expect(res3.body.list[0].cameraId).to.not.be.undefined
+            chai.expect(res3.body.list[0].latitude).to.not.be.undefined
+            chai.expect(res3.body.list[0].longitude).to.not.be.undefined
+            chai.expect(res3.body.list[0].nbAvailable).to.be.at.least(1)
+            chai.expect(res3.body.list[0].distance).to.not.be.undefined
+            done()
+          })
+          .catch((err) => {
+            throw err
+          })
+        })
+        .catch((err) => {
+          throw err
+        })
+      })
+      .catch((err) => {
+        throw err
+      })
+    })
   })
   
   describe('PATCH /parkingspot', () => {

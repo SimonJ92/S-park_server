@@ -1,3 +1,4 @@
+const { json } = require('express')
 const express = require('express')
 const controller = require('../controllers/parkingspot')
 
@@ -61,6 +62,22 @@ parkingspotRouter.get('/', (req,resp) => {
         msg: err.message
       }
       return resp.status(400).json(respObj)
+    }
+    respObj = {
+      list: res.list
+    }
+    resp.status(200).json(respObj)
+  })
+})
+
+parkingspotRouter.get('/near/:latitude/:longitude', (req,resp) => {
+  controller.listCamerasWithAvailableSpotsByAddress(req.params.latitude,req.params.longitude, (err,res) => {
+    if (err) {
+      respObj = {
+        status: "error",
+        msg: err.message
+      }
+      return resp(400).json(respObj)
     }
     respObj = {
       list: res.list

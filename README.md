@@ -63,9 +63,6 @@ The following will list all the http routes accepted by the server. If you want 
 
 - A **GET** request to `http://127.0.0.1:8000/camera/` will return a list of all cameras in the database, each element of the list having the camera's Id, its latitude and longitude.
 
-- A **GET** request to `http://127.0.0.1:8000/camera/{latitude}/{latitude}` will return you a list of cameras near the geopoint at the coordinates given in parameters, each element of the list having the camera's Id, its latitude and longitude.  
-**THIS FEATURE IS NOT DONE YET AS IT HAS BEEN DEEMED LESS URGENT**
-
 #### Update
 
 - A **PATCH** request to `http://127.0.0.1:8000/camera/{cameraId}` with a json body containing the new latitude and longitude of the camera will update them in the database.
@@ -87,6 +84,8 @@ The following will list all the http routes accepted by the server. If you want 
 - A **GET** request to `http://127.0.0.1:8000/parkingspot/{cameraId}` will return a list of all the parking spots linked to a camera in the database. Each element in the list will have its spot id and an indication of its availability.
 
 - A **GET** request to `http://127.0.0.1:8000/parkingspot/` will return a list of all the parking spots in the database. Each element in the list will have its camera id, its spot id and an indication of its availability.
+
+- A **GET** request to `http://127.0.0.1:8000/parkingspot/near/{latitude}/{latitude}` will return you a list of cameras near the geopoint at the coordinates given in parameters, each element of the list having the camera's Id, its latitude and longitude, the distance to the point and the number of available spots.
 
 #### Update
 
