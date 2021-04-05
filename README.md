@@ -5,7 +5,7 @@ This application starts an http server on the user's machine that serves as an m
 
 ## Build
 
-Continuous integration is assured by Travis [here](https://travis-ci.com/github/SimonJ92/S-park_server)
+Continuous integration is assured by Travis [here](https://travis-ci.com/github/SimonJ92/S-park_server).
 
 [![Build Status](https://travis-ci.com/SimonJ92/S-park_server.svg?token=iupp3QJbBM7Y8CqnRq5B&branch=main)](https://travis-ci.com/SimonJ92/S-park_server)
 
@@ -40,7 +40,7 @@ Start the application using the following command :
 npm start
 ```
 
-**The ip used in the following routes is the default loopback ip address. When started, the server will also listen on the machine's ip address : you probably want to use this one in a real use case.**
+**The ip used in the following routes is the default loopback ip address. When started, the server will also listen on the machine's ip address: you probably want to use this one in a real use case.**
 
 By default, the application can be found on localhost and on your machine's ip address on the port 8000.  
 `http://127.0.0.1:8000/`
