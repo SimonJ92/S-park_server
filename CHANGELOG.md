@@ -40,3 +40,7 @@
 
 - Finished parkingspot router
 - Listed all routes in README.md
+
+# 05/04
+
+- Added the camera search by location in controller and router

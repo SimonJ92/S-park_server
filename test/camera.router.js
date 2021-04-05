@@ -130,10 +130,6 @@ describe('Camera REST API', () => {
         throw err
       })
     })
-    
-    it.skip('Get cameras with available spots by address', (done) => {
-      done()
-    })
   })
   
   describe('PATCH /camera', () => {

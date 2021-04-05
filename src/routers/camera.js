@@ -53,15 +53,6 @@ cameraRouter.get('/', (req,resp) => {
   })
 })
 
-cameraRouter.get('/near/:latitude/:longitude', (req,resp) => {
-  respObj = {
-    status: "service missing",
-    latitude: req.params.latitude,
-    longitude: req.params.longitude
-  }
-  return resp.status(200).json(respObj)
-})
-
 cameraRouter.patch('/:cameraId', (req,resp) => {
   controller.updateCameraInfos(req.params.cameraId,req.body.latitude, req.body.longitude, (err,res) => {
     if (err) {
