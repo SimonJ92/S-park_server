@@ -77,7 +77,7 @@ parkingspotRouter.get('/near/:latitude/:longitude', (req,resp) => {
         status: "error",
         msg: err.message
       }
-      return resp(400).json(respObj)
+      return resp.status(400).json(respObj)
     }
     respObj = {
       list: res.list
